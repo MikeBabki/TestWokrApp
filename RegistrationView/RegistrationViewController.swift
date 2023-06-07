@@ -72,9 +72,12 @@ class RegistrationViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
-//        textField.isSecureTextEntry = true
+        textField.isSecureTextEntry = true
+        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(firstPasswordTextField), for: .editingChanged)
         return textField
     }()
 
@@ -89,12 +92,17 @@ class RegistrationViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
+        textField.isSecureTextEntry = true
+        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(secondConfirmPasswordTextfield(_:)), for: .editingChanged)
         return textField
     }()
     
     private lazy var registerButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
         button.backgroundColor = .systemGray3
         button.setTitleColor(.black, for: .normal)
@@ -139,11 +147,39 @@ class RegistrationViewController: UIViewController {
     // MARK: - Action (Button)
     
     @objc func buttonTapped(sender : UIButton) {
-                    print("Button was pressed")
-                }
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        print(textField.text)
-
+        print("Button was pressed")
+    }
+    
+//    @objc func firstPasswordTextField() {
+//        if validation() {
+//            passwordValidationView.isHidden = false
+//            confirmPasswordValidationView.isHidden = true
+//            if sameTextFields() {
+//                confirmPasswordValidationView.isHidden = false
+//            }
+//        } else {
+//            passwordValidationView.isHidden = true
+//        }
+//    }
+    @objc func firstPasswordTextField() {
+        if validation() {
+            passwordValidationView.isHidden = false
+            confirmPasswordValidationView.isHidden = !sameTextFields()
+        } else {
+            passwordValidationView.isHidden = true
+        }
+    }
+    ///tut sdelat indicator
+    
+    @objc func secondConfirmPasswordTextfield(_ textField: UITextField) {
+        if validation() {
+            if sameTextFields() {
+                confirmPasswordValidationView.isHidden = false
+                registerButton.isEnabled = true
+            } else {
+                confirmPasswordValidationView.isHidden = true
+            }
+        }
     }
     // MARK: - Private methods
     
@@ -151,59 +187,19 @@ class RegistrationViewController: UIViewController {
         passwordTextField.delegate = self
         confirmPasswordTextField.delegate = self
     }
+    
+    func validation() -> Bool {
+        passwordTextField.text!.count >= 8 && ((passwordTextField.text?.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil)
+    }
+    func sameTextFields() -> Bool {
+        confirmPasswordTextField.text == passwordTextField.text
+    }
 }
 
 // MARK: - Extention for text validation
 
 extension RegistrationViewController: UITextFieldDelegate {
     
-    //    func textFieldDidEndEditing(_ textField: UITextField) {
-    //
-    //        if textField.text!.count >= 8 && ((textField.text?.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil)  {
-    //            passwordValidationView.isHidden = false
-    //            if passwordTextField.text == confirmPasswordTextField.text {
-    //                confirmPasswordValidationView.isHidden = false
-    //                registerButton.isEnabled = true
-    //            }
-    //        } else {
-    //            passwordValidationView.isHidden = true        }
-    //    }
-    
-    //    func textFieldDidBeginEditing(_ textField: UITextField) {
-    //        if textField.text!.count >= 8 && ((textField.text?.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil)  {
-    //            passwordValidationView.isHidden = false
-    //        } else {
-    //            passwordValidationView.isHidden = true
-    //
-    //        }
-    //    }
-    //}
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.text!.count >= 8 && ((textField.text?.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil)  {
-            passwordValidationView.isHidden = false
-            if passwordTextField.text == confirmPasswordTextField.text {
-                confirmPasswordValidationView.isHidden = false
-                registerButton.isEnabled = true
-            }
-        } else {
-            passwordValidationView.isHidden = true        }
-        return true
-    }
-    
-    
-    
-    
-    //    func textFieldDidEndEditing(_ textField: UITextField) {
-    //
-    //        if textField.text!.count >= 8 && ((textField.text?.rangeOfCharacter(from: CharacterSet.decimalDigits)) != nil)  {
-    //            passwordValidationView.isHidden = false
-    //            if passwordTextField.text == confirmPasswordTextField.text {
-    ////                confirmPasswordValidationView.isHidden = false
-    ////                registerButton.isEnabled = true
-    //            }
-    //        } else {
-    //            passwordValidationView.isHidden = true        }
-    //    }
 }
 
 // MARK: - Extention - AddSubView's - Constraints
