@@ -8,7 +8,7 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class StartScreenViewController: UIViewController {
     
     // MARK: - Outlets
     
@@ -26,12 +26,15 @@ class ViewController: UIViewController {
         setupUI()
     }
     @IBAction func registerButtonTapped(_ sender: Any) {
+        let vc = RegistrationViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.title = "BeerLoga"
     }
 }
 
     // MARK: - Extention fot styling
 
-extension ViewController {
+extension StartScreenViewController {
     func setupUI() {
 
         buttonsView.layer.masksToBounds = true
