@@ -19,16 +19,24 @@ class StartScreenViewController: UIViewController {
     @IBOutlet weak var logInButton: UIButton!
     
     // MARK: - ViewDidLoad
-    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.tintColor = .white
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
     }
+    @IBAction func asGuestModeButtonTapped(_ sender: Any) {
+        
+        let beerCatalogVC = BeerCatalogViewController()
+        self.navigationController?.pushViewController(beerCatalogVC, animated: true)
+        beerCatalogVC.title = "BeerLoga"
+    }
     @IBAction func registerButtonTapped(_ sender: Any) {
-        let vc = RegistrationViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-        vc.title = "BeerLoga"
+        let registerVC = RegistrationViewController()
+        self.navigationController?.pushViewController(registerVC, animated: true)
+        registerVC.title = "BeerLoga"
     }
 }
 
@@ -37,11 +45,15 @@ class StartScreenViewController: UIViewController {
 extension StartScreenViewController {
     func setupUI() {
 
+        view.backgroundColor = .white
         buttonsView.layer.masksToBounds = true
         buttonsView.layer.shadowOffset = CGSize(width: 10,
                                           height: 10)
         buttonsView.layer.shadowRadius = 5
         buttonsView.layer.shadowOpacity = 0.3
         buttonsView.layer.cornerRadius = 16
+        
+//        navigationItem.backBarButtonItem = .init(title: "Hello", style: .plain, target: nil, action: nil)
+//        navigationController?.navigationBar.barTintColor = .black
     }
 }

@@ -114,6 +114,9 @@
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="19"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="asGuestModeButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1MP-8q-EPV"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -135,7 +138,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="EGP-i1-6XG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0CS-PL-r0a"/>
                             <constraint firstItem="t1D-5j-D0N" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3eV-0K-TgP"/>
@@ -149,7 +152,9 @@
                             <constraint firstItem="EGP-i1-6XG" firstAttribute="top" secondItem="mcc-Ra-q2b" secondAttribute="bottom" id="xxR-rM-6Xc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="usO-1Z-zfI"/>
+                    <navigationItem key="navigationItem" id="usO-1Z-zfI">
+                        <barButtonItem key="backBarButtonItem" title=" " id="lXk-xY-YO8"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="asGuestButton" destination="An3-FT-gP4" id="SP1-KJ-tcU"/>
                         <outlet property="buttonsView" destination="EGP-i1-6XG" id="9pg-lX-kne"/>
@@ -185,7 +190,7 @@
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H80-OE-PaR">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OmN-NM-WYM">
-                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="294"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <constraints>
@@ -327,9 +332,6 @@
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

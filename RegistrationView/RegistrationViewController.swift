@@ -120,7 +120,6 @@ class RegistrationViewController: UIViewController {
         view.backgroundColor = .green
         view.layer.borderWidth = 0.7
         view.layer.cornerRadius = 5
-        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -130,7 +129,6 @@ class RegistrationViewController: UIViewController {
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 0.7
         view.layer.cornerRadius = 5
-        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -139,29 +137,20 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initializeSetup()
         setupText()
     }
     
-    // MARK: - Action (Button)
+    // MARK: - Action's (Button and TextFields)
     
     @objc func buttonTapped(sender : UIButton) {
-        print("Button was pressed")
+        let beerCatalogVC = BeerCatalogViewController()
+        self.navigationController?.pushViewController(beerCatalogVC, animated: true)
+        beerCatalogVC.title = "BeerCatalog"
     }
     
-//    @objc func firstPasswordTextField() {
-//        if validation() {
-//            passwordValidationView.isHidden = false
-//            confirmPasswordValidationView.isHidden = true
-//            if sameTextFields() {
-//                confirmPasswordValidationView.isHidden = false
-//            }
-//        } else {
-//            passwordValidationView.isHidden = true
-//        }
-//    }
     @objc func firstPasswordTextField() {
+        
         if validation() {
             passwordValidationView.isHidden = false
             confirmPasswordValidationView.isHidden = !sameTextFields()
@@ -169,12 +158,11 @@ class RegistrationViewController: UIViewController {
             passwordValidationView.isHidden = true
         }
     }
-    ///tut sdelat indicator
     
     @objc func secondConfirmPasswordTextfield(_ textField: UITextField) {
         if validation() {
             if sameTextFields() {
-                confirmPasswordValidationView.isHidden = false
+                confirmPasswordValidationView.isHidden = !sameTextFields()
                 registerButton.isEnabled = true
             } else {
                 confirmPasswordValidationView.isHidden = true
@@ -207,6 +195,11 @@ extension RegistrationViewController: UITextFieldDelegate {
 extension RegistrationViewController {
     
         func setupText() {
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            view.clipsToBounds = true
+
+            passwordValidationView.isHidden = true
+            confirmPasswordValidationView.isHidden = true
             view.backgroundColor = .white
             view.addSubview(backgroundImage)
             view.addSubview(scrollView)

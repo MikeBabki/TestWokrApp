@@ -18,7 +18,13 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupText()
+    }
+}
+
+extension LoginViewController {
+    func setupText() {
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         title = "BeerLoga"
     }
 }
