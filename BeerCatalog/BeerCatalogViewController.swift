@@ -55,6 +55,16 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BeerTableViewCell.identifier, for: indexPath) as? BeerTableViewCell else {
             fatalError("TableView could not deque CustomCell in ViewController")
         }
+        if indexPath.row % 2 == 0
+        {
+            cell.beerNameLabel.text = "sdfghjkjhg"
+            cell.beerDescriptionlabel.text = "dfghjkjhgfdfghj"
+        }
+        else
+        {
+            cell.beerNameLabel.text = "sdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfghjkjhgsdfgdfghgfghjhgfdfghjhgfdfghjhgfdfghhjkjhg"
+            cell.beerDescriptionlabel.text = "dfghjkjhgfdfghjdfghjkjhgfdfghjdfghjkjhgfdfghjdfghjkjhgfdfghjdfghjkjhgfdfghjdfghjkjhgfdfghjdfghjkjhgfdfghj"
+        }
         cell.selectionStyle = .none
         return cell
     }

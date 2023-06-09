@@ -19,19 +19,19 @@ class BeerTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var beerNameLabel: UILabel = {
+    lazy var beerNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .medium)
-        label.text = "xmzXJZxhzxzKxildqjldjdljsdklakldaskldjsalkjdkalsdklsajdlkjdlkasjdlkasjdlkasjdklasjldsajkdajkldkljasdjkasdassnaSAmshkajhskjahskajhskajhsjkahskjahskjahskajsahkjshkjSHKJAshkjashkjashkjshkjsdzXJZxhzxzKxildqjldjdljsdklakldaskldjsalkjdkalsdklsajdlkjdlkasjdlkasjdlkasjdklasjldsajkdajkldkljasdjkasdassnaSAmshkajhskjahskajhskajhsjkahskjahskjahskajsahkjshkjSHKJAshkjashkjashkjshkjsdzXJZxhzxzKxildqjldjdljsdklakldaskldjsalkjdkalsdklsajdlkjdlkasjdlkasjdlkasjdklasjldsajkdajkldkljasdjkasdassnaSAmshkajhskjahskajhskajhsjkahskjahskjahskajsahkjshkjSHKJAshkjashkjashkjshkjsd"
-        label.numberOfLines = 3
+//        label.text = "dsakldmsalkdmsakda"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var beerDescriptionlabel: UILabel = {
+    lazy var beerDescriptionlabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .light)
-        label.text = "sdnjasndkjasdjkasdklsajdklasjdklasjdklasjdklsadklasdjlkasdkjadjladjkladjklajskdakjld"
+//        label.text = "dsakldmsalkdmsakda;ds"
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -55,6 +55,7 @@ class BeerTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        
         self.contentView.addSubview(beerImage)
         self.contentView.addSubview(beerNameLabel)
         self.contentView.addSubview(beerDescriptionlabel)
@@ -63,28 +64,24 @@ class BeerTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
         
-            beerImage.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            
-            beerImage.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
             beerImage.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor ),
+            beerImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            beerImage.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
         
             beerNameLabel.leadingAnchor.constraint(equalTo: beerImage.trailingAnchor, constant: 16),
             beerNameLabel.trailingAnchor.constraint(equalTo: favouriteIcon.leadingAnchor, constant: -8),
             beerNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            beerNameLabel.bottomAnchor.constraint(equalTo: beerDescriptionlabel.topAnchor, constant: 16),
-            
             
             beerDescriptionlabel.leadingAnchor.constraint(equalTo: beerImage.trailingAnchor, constant: 16),
             beerDescriptionlabel.topAnchor.constraint(equalTo: beerNameLabel.bottomAnchor, constant: 8),
             beerDescriptionlabel.trailingAnchor.constraint(equalTo: favouriteIcon.leadingAnchor, constant: -8),
-            beerDescriptionlabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8),
+            beerDescriptionlabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             
-            beerImage.heightAnchor.constraint(lessThanOrEqualToConstant: 90),
-            beerImage.widthAnchor.constraint(equalToConstant: 90),
+            beerImage.heightAnchor.constraint(equalToConstant: 80),
+            beerImage.widthAnchor.constraint(equalToConstant: 80),
             
             favouriteIcon.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -36),
             favouriteIcon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0)
-            
         ])
     }
     

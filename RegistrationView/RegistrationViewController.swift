@@ -132,7 +132,7 @@ class RegistrationViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    TinyConstraints
     // MARK: - LifeCycle ViewDidLoad
     
     override func viewDidLoad() {
