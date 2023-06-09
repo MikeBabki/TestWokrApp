@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TinyConstraints
 
 class RegistrationViewController: UIViewController {
     
@@ -17,7 +18,6 @@ class RegistrationViewController: UIViewController {
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFill
         imageView.alpha = 0.55
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -25,7 +25,6 @@ class RegistrationViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.frame = view.bounds
         return scrollView
     }()
@@ -35,14 +34,12 @@ class RegistrationViewController: UIViewController {
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = .clear
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
     
     private lazy var registrationView: UIView = {
         let registrationView = UIView()
         registrationView.backgroundColor = .clear
-        registrationView.translatesAutoresizingMaskIntoConstraints = false
         return registrationView
     }()
     
@@ -50,14 +47,12 @@ class RegistrationViewController: UIViewController {
         let label = UILabel()
         label.text = "Login"
         label.font = .systemFont(ofSize: 25, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
-        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
@@ -65,7 +60,6 @@ class RegistrationViewController: UIViewController {
         let label = UILabel()
         label.text = "Password"
         label.font = .systemFont(ofSize: 25, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var passwordTextField: UITextField = {
@@ -76,7 +70,6 @@ class RegistrationViewController: UIViewController {
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(firstPasswordTextField), for: .editingChanged)
         return textField
     }()
@@ -85,7 +78,6 @@ class RegistrationViewController: UIViewController {
         let label = UILabel()
         label.text = "Confirm password"
         label.font = .systemFont(ofSize: 25, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var confirmPasswordTextField: UITextField = {
@@ -96,7 +88,6 @@ class RegistrationViewController: UIViewController {
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = paddingView
         textField.leftViewMode = .always
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(secondConfirmPasswordTextfield(_:)), for: .editingChanged)
         return textField
     }()
@@ -110,7 +101,6 @@ class RegistrationViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         button.isEnabled = false
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
@@ -120,19 +110,18 @@ class RegistrationViewController: UIViewController {
         view.backgroundColor = .green
         view.layer.borderWidth = 0.7
         view.layer.cornerRadius = 5
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var confirmPasswordValidationView: UIView = {
         let view = UIView()
         view.backgroundColor = .green
         view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 0.7
         view.layer.cornerRadius = 5
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    TinyConstraints
+    
     // MARK: - LifeCycle ViewDidLoad
     
     override func viewDidLoad() {
@@ -200,6 +189,7 @@ extension RegistrationViewController {
 
             passwordValidationView.isHidden = true
             confirmPasswordValidationView.isHidden = true
+            
             view.backgroundColor = .white
             view.addSubview(backgroundImage)
             view.addSubview(scrollView)
@@ -216,75 +206,55 @@ extension RegistrationViewController {
             registrationView.addSubview(registerButton)
             registrationView.addSubview(passwordValidationView)
             registrationView.addSubview(confirmPasswordValidationView)
+   
+            backgroundImage.edgesToSuperview()
+            scrollView.edgesToSuperview()
+            contentView.verticalToSuperview()
             
-            NSLayoutConstraint.activate([
-               
-                // MARK: - Constraint (Background image)
-                
-                backgroundImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-                backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-                backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-                
-                // MARK: - Constraint (ScrollView, ContentView, RegistrationView)
-                
-                scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-                scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-                scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-                
-                contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-                contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-                contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            contentView.centerInSuperview()
+            contentView.widthToSuperview()
+            contentView.heightToSuperview()
 
-                contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-                contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1),
-                
-                registrationView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                registrationView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                registrationView.widthAnchor.constraint(equalToConstant: 250),
-                registrationView.heightAnchor.constraint(equalToConstant: 400),
+            registrationView.centerInSuperview()
+            registrationView.width(250)
+            registrationView.height(400)
+            
+            loginRegisterLabel.top(to: registrationView, offset: 16)
+            loginRegisterLabel.centerX(to: registrationView)
+            
+            loginTextField.topToBottom(of: loginRegisterLabel, offset: 8)
+            loginTextField.leading(to: registrationView, offset: 8)
+            loginTextField.trailing(to: registrationView, offset: -8)
+            loginTextField.height(34)
 
-                // MARK: - UIElements constraints
-                
-                loginRegisterLabel.topAnchor.constraint(equalTo: registrationView.topAnchor, constant: 16),
-                loginRegisterLabel.centerXAnchor.constraint(equalTo: registrationView.centerXAnchor),
-
-                loginTextField.topAnchor.constraint(equalTo: loginRegisterLabel.bottomAnchor, constant: 8),
-                loginTextField.leadingAnchor.constraint(equalTo: registrationView.leadingAnchor, constant: 8),
-                loginTextField.trailingAnchor.constraint(equalTo: registrationView.trailingAnchor, constant: -8),
-                loginTextField.heightAnchor.constraint(equalToConstant: 34),
-                
-                passwordLabel.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 40),
-                passwordLabel.centerXAnchor.constraint(equalTo: registrationView.centerXAnchor),
-                
-                passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 8),
-                passwordTextField.leadingAnchor.constraint(equalTo: registrationView.leadingAnchor, constant: 8),
-                passwordTextField.trailingAnchor.constraint(equalTo: registrationView.trailingAnchor, constant: -8),
-                passwordTextField.heightAnchor.constraint(equalToConstant: 34),
-                
-                confirmPasswordLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 40),
-                confirmPasswordLabel.centerXAnchor.constraint(equalTo: registrationView.centerXAnchor),
-                
-                confirmPasswordTextField.topAnchor.constraint(equalTo: confirmPasswordLabel.bottomAnchor, constant: 8),
-                confirmPasswordTextField.leadingAnchor.constraint(equalTo: registrationView.leadingAnchor, constant: 8),
-                confirmPasswordTextField.trailingAnchor.constraint(equalTo: registrationView.trailingAnchor, constant: -8),
-                confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 34),
-                
-                registerButton.topAnchor.constraint(equalTo: confirmPasswordTextField.bottomAnchor, constant: 40),
-                registerButton.centerXAnchor.constraint(equalTo: registrationView.centerXAnchor),
-                registerButton.widthAnchor.constraint(equalToConstant: 100),
-                
-                passwordValidationView.leadingAnchor.constraint(equalTo: passwordTextField.trailingAnchor, constant: 16),
-                passwordValidationView.topAnchor.constraint(equalTo: passwordTextField.centerYAnchor, constant: 0),
-                passwordValidationView.widthAnchor.constraint(equalToConstant: 10),
-                passwordValidationView.heightAnchor.constraint(equalToConstant: 10),
-                
-                confirmPasswordValidationView.leadingAnchor.constraint(equalTo: confirmPasswordTextField.trailingAnchor, constant: 16),
-                confirmPasswordValidationView.topAnchor.constraint(equalTo: confirmPasswordTextField.centerYAnchor, constant: 0),
-                confirmPasswordValidationView.widthAnchor.constraint(equalToConstant: 10),
-                confirmPasswordValidationView.heightAnchor.constraint(equalToConstant: 10)
-            ])
+            passwordLabel.topToBottom(of: loginTextField, offset: 40)
+            passwordLabel.centerX(to: registrationView)
+            
+            passwordTextField.topToBottom(of: passwordLabel, offset: 8)
+            passwordTextField.leading(to: registrationView, offset: 8)
+            passwordTextField.trailing(to: registrationView, offset: -8)
+            passwordTextField.height(34)
+            
+            confirmPasswordLabel.topToBottom(of: passwordTextField, offset: 40)
+            confirmPasswordLabel.centerX(to: registrationView)
+            
+            confirmPasswordTextField.topToBottom(of: confirmPasswordLabel, offset: 8)
+            confirmPasswordTextField.leading(to: registrationView, offset: 8)
+            confirmPasswordTextField.trailing(to: registrationView, offset: -8)
+            confirmPasswordTextField.height(34)
+            
+            registerButton.topToBottom(of: confirmPasswordTextField, offset: 40)
+            registerButton.centerX(to: registrationView)
+            registerButton.width(100)
+            
+            passwordValidationView.leadingToTrailing(of: passwordTextField, offset: 16)
+            passwordValidationView.centerY(to: passwordTextField)
+            passwordValidationView.width(10)
+            passwordValidationView.height(10)
+            
+            confirmPasswordValidationView.leadingToTrailing(of: confirmPasswordTextField, offset: 16)
+            confirmPasswordValidationView.centerY(to: confirmPasswordTextField)
+            confirmPasswordValidationView.width(10)
+            confirmPasswordValidationView.height(10)
     }
 }
