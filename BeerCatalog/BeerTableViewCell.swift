@@ -7,10 +7,12 @@
 
 import UIKit
 import TinyConstraints
+import Kingfisher
 
 class BeerTableViewCell: UITableViewCell {
 
     static let identifier = "BeerTableViewCell"
+    var model: BeerModel?
     
     private lazy var beerImage: UIImageView = {
         let imageView = UIImageView()
@@ -47,6 +49,16 @@ class BeerTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configure(withModel model: BeerModel?) {
+    
+    self.model = model
+        
+        beerImage.kf.setImage(with: URL(string: model?.image_url ?? ""))
+        beerNameLabel.text = String(model?.name ?? "")
+        beerDescriptionLabel.text = model?.description ?? ""
+    
+}
     
     private func setupUI() {
         
