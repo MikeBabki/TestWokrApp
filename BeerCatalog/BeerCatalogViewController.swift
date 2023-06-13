@@ -16,7 +16,8 @@ class BeerCatalogViewController: UIViewController {
     
     private var beerModel = [BeerModel]()
     var pageNumber = 1
-    
+    var totalBeerCount = 80
+
     private var networkManagerInstance = NetworkManager()
     
     private lazy var backgroundView: UIView = {
@@ -75,7 +76,6 @@ class BeerCatalogViewController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(retryConnection), for: .touchUpInside)
-//        textField.addTarget(self, action: #selector(firstPasswordTextField), for: .editingChanged)
         return button
     }()
     
@@ -83,30 +83,42 @@ class BeerCatalogViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationItem.leftBarButtonItem?.tintColor = .black
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        let v = type(of: self)
+        v == BeerCatalogViewController.self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .white
         loadBeer()
-        setupText()
+        setupUI()
     }
     
     @objc func loadBeer() {
-//        MBProgressHUD.showAdded(to: self.view, animated: true)
-        networkManagerInstance.getResult(page: self.pageNumber) { (searchResponse) in
+        
+        loadErrorView.isHidden = true
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        beerTableView.isHidden = true
+        networkManagerInstance.getResult(page: self.pageNumber, totalCount: self.totalBeerCount) { (searchResponse) in
             switch searchResponse {
             case.success(let data):
                 DispatchQueue.main.async {
                     data?.forEach {
+
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                        self.beerTableView.isHidden = false
                         self.beerModel.append($0)
                     }
                     self.beerTableView.reloadData()
                 }
             case .failure(let error):
 //                MBProgressHUD.hide(for: self.view, animated: true)
-                self.loadErrorView.isHidden = false
-                self.errorDescriptionLabel.text = error.localizedDescription
+                DispatchQueue.main.async {
+                    self.beerTableView.isHidden = true
+                    self.loadErrorView.isHidden = false
+                    self.errorDescriptionLabel.text = error.localizedDescription ?? "Error"
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                }
                 
             }
         }
@@ -117,7 +129,9 @@ class BeerCatalogViewController: UIViewController {
             present(vc, animated: true)
         }
     @objc func retryConnection(sender : UIButton) {
+        MBProgressHUD.hide(for: self.view, animated: true)
         loadBeer()
+        print("Dsadasda")
     }
 }
 
@@ -148,9 +162,8 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension BeerCatalogViewController {
     
-    func setupText() {
+    func setupUI() {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        view.backgroundColor = .clear
         let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
         self.navigationItem.rightBarButtonItem = rightButton
      

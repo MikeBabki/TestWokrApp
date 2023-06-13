@@ -9,9 +9,9 @@ import Foundation
 
 class NetworkManager {
     
-    func getResult(page: Int, completion: @escaping(Result<[BeerModel]?, Error>) -> Void) {
+    func getResult(page: Int, totalCount: Int, completion: @escaping(Result<[BeerModel]?, Error>) -> Void) {
     
-        var urlString = URLManager.beerURLCreator(page: page)
+        var urlString = URLManager.beerURLCreator(page: page, totalCount: totalCount)
         var url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!) { data, _, error in
             guard let data = data else {
