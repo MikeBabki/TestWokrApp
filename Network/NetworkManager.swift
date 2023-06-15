@@ -29,21 +29,24 @@ class NetworkManager {
             }
         }.resume()
     }
-    func apiCall(name: String, email: String, password: String, completion: @escaping(Result<RegisterModel?, Error>) -> Void) {
+    
+    // Api Call for RegistrationView
+    
+    func registerApiCall(name: String, email: String, password: String, completion: @escaping(Result<RegisterModel?, Error>) -> Void) {
         guard let url = URL(string: "http://restapi.adequateshop.com/api/authaccount/registration") else {
             return
         }
         var request = URLRequest(url: url)
-        request.httpMethod = "Post"
+        request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let body: [String: AnyHashable] = [
-            "name" : name,
+            "name" : email,
             "email": email,
             "password": password,
             
         ]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             
@@ -51,14 +54,11 @@ class NetworkManager {
                 return
             }
             do {
-//                let response = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 let decodedData = try JSONDecoder().decode(RegisterModel.self, from: data)
                 print(decodedData.data.token)
                 let token = decodedData.data.token
-                let service = "restapi.adequateshop.com"
+                let service = ""
                 KeychainManager.saveToken(token: token, service: service)
-//                KeychainManager.deleteToken(service: service)
-//                print("Token is \(KeychainManager.getToken(service: "restapi.adequateshop.com"))")
                 completion(.success(decodedData))
             } catch {
                 completion(.failure(error))
@@ -69,16 +69,3 @@ class NetworkManager {
         task.resume()
     }
 }
-
-//
-//                // Получение токена
-//                if let savedToken = KeychainManager.getToken(service: service) {
-//                    print("Token: \(savedToken)")
-//                } else {
-//                    print("Token not found")
-//                }
-//
-//                // Удаление токена
-//
-
-

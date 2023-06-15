@@ -23,7 +23,6 @@ class StartScreenViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(KeychainManager.getToken(service: "restapi.adequateshop.com"))
         setupUI()
     }
     

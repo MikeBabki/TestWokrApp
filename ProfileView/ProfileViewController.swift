@@ -25,7 +25,6 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -33,9 +32,10 @@ class ProfileViewController: UIViewController {
 
     }
      func someHandler(alert: UIAlertAction!) {
-         
-         KeychainManager.deleteToken(service: "restapi.adequateshop.com")
+         KeychainManager.deleteToken(service: "")
+   
     }
+    
     @objc func myAccount() {
         let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: someHandler))

@@ -79,9 +79,16 @@ class BeerCatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .white
         loadBeer()
         setupUI()
+       
+//        func viewDidDisappear(_ animated: Bool) {
+//            super.viewDidDisappear(animated)
+//
+//
+//        }
     }
     
     @objc func loadBeer() {

@@ -11,7 +11,7 @@
         <!--Start Screen View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="StartScreenViewController" customModule="TestWokrApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainID" id="BYZ-38-t0r" customClass="StartScreenViewController" customModule="TestWokrApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,7 +190,7 @@
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H80-OE-PaR">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OmN-NM-WYM">
-                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="294"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <constraints>

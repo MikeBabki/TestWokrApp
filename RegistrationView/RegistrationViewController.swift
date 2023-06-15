@@ -13,6 +13,7 @@ class RegistrationViewController: UIViewController {
     
     
     private var networkInstanse = NetworkManager()
+    
     // MARK: - Private properties
     
     private lazy var backgroundImage: UIImageView = {
@@ -132,33 +133,52 @@ class RegistrationViewController: UIViewController {
         initializeSetup()
         setupText()
     }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        var navigationArray = navigationController?.viewControllers
+//        let temp = navigationArray?.last ?? StartScreenViewController()
+//        navigationArray?.removeAll()
+//        navigationArray?.append(temp)
+//        self.navigationController?.viewControllers = navigationArray!
+//        print(self.navigationController?.viewControllers)
+//    }
     
     // MARK: - Action's (Button and TextFields)
     
     @objc func buttonTapped(sender : UIButton) {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        let mbProgHud = MBProgressHUD.showAdded(to: self.view, animated: true)
         guard let email = loginTextField.text, let password = confirmPasswordTextField.text else { return }
-        networkInstanse.apiCall(name: email, email: email, password: password) { (searchResponse) in
-            switch searchResponse {
-                
-            case.success(let data):
-                
-                DispatchQueue.main.async {
-                    MBProgressHUD.hide(for: self.view, animated: true)
+        networkInstanse.registerApiCall(name: email, email: email, password: password) { (searchResponse) in
+            DispatchQueue.main.async {
+                switch searchResponse {
+                    
+                case.success(let data):
+
+                    mbProgHud.hide(animated: true)
                     let beerCatalogVC = BeerCatalogViewController()
+//                    self.navigationController?.pushViewController(beerCatalogVC, animated: true)
                     
-//                    self.navigationController?.navigationBar.topItem?.backBarButtonItem?.isHidden = true
-                    self.navigationController?.pushViewController(beerCatalogVC, animated: true)
-                    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-                    beerCatalogVC.title = "BeerCatalog"
+//                    var navArray:Array = (self.navigationController?.viewControllers)!
+//                    print(self.navigationController?.viewControllers)
                     
-                }
-            case.failure(let error):
-                DispatchQueue.main.async {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    
+                    guard let navigationController = self.navigationController
+                    else { return }
+                    
+                    var navigationArray = navigationController.viewControllers
+                    let temp = navigationArray.last
+                    navigationArray.removeAll()
+                    navigationArray.append(beerCatalogVC)
+                    navigationController.setViewControllers(navigationArray, animated: true)
+//                    self.navigationController?.viewControllers = navigationArray
+                    print(self.navigationController?.viewControllers)
+                    
+                    
+                case.failure(let error):
+                    mbProgHud.hide(animated: true)
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true)
                 }
             }
         }
