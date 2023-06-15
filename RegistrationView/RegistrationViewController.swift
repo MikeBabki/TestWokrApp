@@ -10,6 +10,8 @@ import TinyConstraints
 
 class RegistrationViewController: UIViewController {
     
+    
+    private var networkInstanse = NetworkManager()
     // MARK: - Private properties
     
     private lazy var backgroundImage: UIImageView = {
@@ -133,9 +135,10 @@ class RegistrationViewController: UIViewController {
     // MARK: - Action's (Button and TextFields)
     
     @objc func buttonTapped(sender : UIButton) {
-        let beerCatalogVC = BeerCatalogViewController()
-        self.navigationController?.pushViewController(beerCatalogVC, animated: true)
-        beerCatalogVC.title = "BeerCatalog"
+        
+                let beerCatalogVC = BeerCatalogViewController()
+                self.navigationController?.pushViewController(beerCatalogVC, animated: true)
+                beerCatalogVC.title = "BeerCatalog"
     }
     
     @objc func firstPasswordTextField() {

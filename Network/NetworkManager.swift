@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import RNCryptor
 
+var items = UserLoginRegisterModel()
 class NetworkManager {
     
     func getResult(page: Int, totalCount: Int, completion: @escaping(Result<[BeerModel]?, Error>) -> Void) {
@@ -16,6 +18,7 @@ class NetworkManager {
         URLSession.shared.dataTask(with: url!) { data, _, error in
             guard let data = data else {
                 completion(.failure(error!))
+                
                 return
             }
             do {
@@ -26,4 +29,34 @@ class NetworkManager {
             }
         }.resume()
     }
+    //Request
+    
+
+//    func registerResponse() {
+//
+//        guard let url = URL(string: URLManager.profileRegister) else { return }
+//        URLSession.shared.dataTask(with: url) { (data, res, err) in
+//            do {
+//                if let data = data {
+//                    let result = try JSONDecoder().decode([UserLoginRegisterModel].self, from: data)
+//                    DispatchQueue.main.async {
+//                        self.items = result
+//                    }
+//                } else {
+//                    print("No data")
+//                }
+//            } catch (let error) {
+//                print(error.localizedDescription)
+//            }
+//
+//
+//
+//        }.resume()
+//    }
+
 }
+
+
+
+
+

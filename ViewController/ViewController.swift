@@ -23,7 +23,7 @@ class StartScreenViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        apiCall()
         setupUI()
     }
     

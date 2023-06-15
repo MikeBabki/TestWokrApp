@@ -20,14 +20,6 @@ class BeerCatalogViewController: UIViewController {
 
     private var networkManagerInstance = NetworkManager()
     
-    private lazy var backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.contentMode = .scaleAspectFill
-        return view
-        
-    }()
-    
     private lazy var beerTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -83,8 +75,6 @@ class BeerCatalogViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationItem.leftBarButtonItem?.tintColor = .black
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
-        let v = type(of: self)
-        v == BeerCatalogViewController.self
     }
     
     override func viewDidLoad() {
@@ -112,7 +102,6 @@ class BeerCatalogViewController: UIViewController {
                     self.beerTableView.reloadData()
                 }
             case .failure(let error):
-//                MBProgressHUD.hide(for: self.view, animated: true)
                 DispatchQueue.main.async {
                     self.beerTableView.isHidden = true
                     self.loadErrorView.isHidden = false
@@ -125,8 +114,11 @@ class BeerCatalogViewController: UIViewController {
     }
     
     @objc func myAccount() {
-            let vc = ProfileViewController()
-            present(vc, animated: true)
+        let profileVC = ProfileViewController()
+        self.navigationController?.pushViewController(profileVC, animated: true)
+        profileVC.title = "Profile"
+        navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        
         }
     @objc func retryConnection(sender : UIButton) {
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -152,7 +144,11 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let beerDescriptionVC = BeerDescriptionViewController()
+        self.navigationController?.pushViewController(beerDescriptionVC, animated: true)
+        
+        beerDescriptionVC.title = "Beer Details"
+        navigationController?.navigationBar.topItem?.backButtonTitle = " "
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

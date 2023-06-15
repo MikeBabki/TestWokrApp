@@ -28,7 +28,29 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
+        setupUI()
 
+    }
+     func someHandler(alert: UIAlertAction!) {
+         
+         print("Logged out is done")
+//        let startVC = StartScreenViewController()
+//         present(startVC, animated: true, completion: nil)
+    }
+    @objc func myAccount() {
+        let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: someHandler))
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+}
+
+extension ProfileViewController {
+    func setupUI() {
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.square"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
+        self.navigationItem.rightBarButtonItem = rightButton
     }
 }
