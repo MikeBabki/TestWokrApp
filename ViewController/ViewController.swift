@@ -23,7 +23,7 @@ class StartScreenViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiCall()
+        print(KeychainManager.getToken(service: "restapi.adequateshop.com"))
         setupUI()
     }
     
@@ -53,6 +53,5 @@ extension StartScreenViewController {
         buttonsView.layer.shadowRadius = 5
         buttonsView.layer.shadowOpacity = 0.3
         buttonsView.layer.cornerRadius = 16
-
     }
 }

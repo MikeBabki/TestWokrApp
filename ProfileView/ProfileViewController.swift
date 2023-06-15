@@ -34,9 +34,7 @@ class ProfileViewController: UIViewController {
     }
      func someHandler(alert: UIAlertAction!) {
          
-         print("Logged out is done")
-//        let startVC = StartScreenViewController()
-//         present(startVC, animated: true, completion: nil)
+         KeychainManager.deleteToken(service: "restapi.adequateshop.com")
     }
     @objc func myAccount() {
         let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)

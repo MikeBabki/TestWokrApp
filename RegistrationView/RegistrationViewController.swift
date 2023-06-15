@@ -7,6 +7,7 @@
 
 import UIKit
 import TinyConstraints
+import MBProgressHUD
 
 class RegistrationViewController: UIViewController {
     
@@ -135,10 +136,32 @@ class RegistrationViewController: UIViewController {
     // MARK: - Action's (Button and TextFields)
     
     @objc func buttonTapped(sender : UIButton) {
-        
-                let beerCatalogVC = BeerCatalogViewController()
-                self.navigationController?.pushViewController(beerCatalogVC, animated: true)
-                beerCatalogVC.title = "BeerCatalog"
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        guard let email = loginTextField.text, let password = confirmPasswordTextField.text else { return }
+        networkInstanse.apiCall(name: email, email: email, password: password) { (searchResponse) in
+            switch searchResponse {
+                
+            case.success(let data):
+                
+                DispatchQueue.main.async {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    let beerCatalogVC = BeerCatalogViewController()
+                    
+//                    self.navigationController?.navigationBar.topItem?.backBarButtonItem?.isHidden = true
+                    self.navigationController?.pushViewController(beerCatalogVC, animated: true)
+                    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+                    beerCatalogVC.title = "BeerCatalog"
+                    
+                }
+            case.failure(let error):
+                DispatchQueue.main.async {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     @objc func firstPasswordTextField() {

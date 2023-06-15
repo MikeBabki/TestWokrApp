@@ -162,8 +162,8 @@ extension BeerCatalogViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
         self.navigationItem.rightBarButtonItem = rightButton
+        self.navigationItem.setHidesBackButton(true, animated:true)
      
-
         // MARK: - Constraint (tableView)
         
         view.addSubview(beerTableView)
