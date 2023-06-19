@@ -15,7 +15,7 @@ struct UserLoginRegisterModel: Decodable {
 struct ProfileInformation: Decodable {
     
     var name: String?
-    var token: String
+    var token: String?
     
     private enum CodingKeys : String, CodingKey {
         case name = "Name", token = "Token"

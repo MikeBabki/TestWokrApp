@@ -8,6 +8,7 @@
 import UIKit
 import MBProgressHUD
 import TinyConstraints
+import SwiftyJSON
 
 
 class BeerCatalogViewController: UIViewController {
@@ -84,12 +85,9 @@ class BeerCatalogViewController: UIViewController {
         loadBeer()
         setupUI()
        
-//        func viewDidDisappear(_ animated: Bool) {
-//            super.viewDidDisappear(animated)
-//
-//
-//        }
     }
+    
+    // MARK: -  Action's
     
     @objc func loadBeer() {
         
@@ -115,7 +113,6 @@ class BeerCatalogViewController: UIViewController {
                     self.errorDescriptionLabel.text = error.localizedDescription ?? "Error"
                     MBProgressHUD.hide(for: self.view, animated: true)
                 }
-                
             }
         }
     }
@@ -133,6 +130,9 @@ class BeerCatalogViewController: UIViewController {
         print("Dsadasda")
     }
 }
+
+
+// MARK: - Extentions
 
 extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

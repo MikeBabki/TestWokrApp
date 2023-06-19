@@ -8,16 +8,15 @@
 import Foundation
 
 
-struct RegisterModel: Codable {
+struct RegisterModel: Decodable {
 
-    let data: DataClass
+    var data: DataClass?
 }
 
-// MARK: - DataClass
-struct DataClass: Codable {
+struct DataClass: Decodable {
     
-    let email: String
-    let token: String
+    var email: String?
+    var token: String?
 
     enum CodingKeys: String, CodingKey {
 

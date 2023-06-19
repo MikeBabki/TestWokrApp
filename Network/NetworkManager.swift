@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-var items = UserLoginRegisterModel()
+//var items = UserLoginRegisterModel()
+var registerModelInstance = DataClass()
+var beerModelInstance = [BeerModel]()
 
 class NetworkManager {
 
@@ -18,12 +21,26 @@ class NetworkManager {
         URLSession.shared.dataTask(with: url!) { data, _, error in
             guard let data = data else {
                 completion(.failure(error!))
-                
                 return
             }
             do {
-                let result = try JSONDecoder().decode([BeerModel].self, from: data)
-                completion(.success(result))
+                
+                let json = try! JSON(data: data)
+
+                let arrayNames = json.arrayValue.map { itemJson in
+                    return itemJson["name"].stringValue
+                }
+                
+                let beerModels = json.arrayValue.map{
+                    return  BeerModel(
+                        name: $0["name"].stringValue,
+                        description: $0["description"].stringValue,
+                        image_url: $0["image_url"].stringValue
+                    )
+                }
+            
+                completion(.success(beerModels))
+                
             } catch {
                 completion(.failure(error))
             }
@@ -32,7 +49,7 @@ class NetworkManager {
     
     // Api Call for RegistrationView
     
-    func registerApiCall(name: String, email: String, password: String, completion: @escaping(Result<RegisterModel?, Error>) -> Void) {
+    func registerApiCall(name: String, email: String, password: String, completion: @escaping(Result<DataClass?, Error>) -> Void) {
         guard let url = URL(string: "http://restapi.adequateshop.com/api/authaccount/registration") else {
             return
         }
@@ -44,8 +61,8 @@ class NetworkManager {
             "name" : email,
             "email": email,
             "password": password,
-            
         ]
+        
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -54,12 +71,17 @@ class NetworkManager {
                 return
             }
             do {
-                let decodedData = try JSONDecoder().decode(RegisterModel.self, from: data)
-                print(decodedData.data.token)
-                let token = decodedData.data.token
+                
+                let json = try! JSON(data: data)
+                let userName = json["data"]["Name"].stringValue
+                let token1 = json ["data"]["Token"].stringValue
                 let service = ""
-                KeychainManager.saveToken(token: token, service: service)
-                completion(.success(decodedData))
+                KeychainManager.saveToken(token: token1, service: service)
+                
+                registerModelInstance.email = userName
+                registerModelInstance.token = token1
+                completion(.success(registerModelInstance))
+
             } catch {
                 completion(.failure(error))
                 print(error)

@@ -133,14 +133,6 @@ class RegistrationViewController: UIViewController {
         initializeSetup()
         setupText()
     }
-//    override func viewDidDisappear(_ animated: Bool) {
-//        var navigationArray = navigationController?.viewControllers
-//        let temp = navigationArray?.last ?? StartScreenViewController()
-//        navigationArray?.removeAll()
-//        navigationArray?.append(temp)
-//        self.navigationController?.viewControllers = navigationArray!
-//        print(self.navigationController?.viewControllers)
-//    }
     
     // MARK: - Action's (Button and TextFields)
     
@@ -156,12 +148,6 @@ class RegistrationViewController: UIViewController {
 
                     mbProgHud.hide(animated: true)
                     let beerCatalogVC = BeerCatalogViewController()
-//                    self.navigationController?.pushViewController(beerCatalogVC, animated: true)
-                    
-//                    var navArray:Array = (self.navigationController?.viewControllers)!
-//                    print(self.navigationController?.viewControllers)
-                    
-                    
                     guard let navigationController = self.navigationController
                     else { return }
                     
@@ -170,7 +156,6 @@ class RegistrationViewController: UIViewController {
                     navigationArray.removeAll()
                     navigationArray.append(beerCatalogVC)
                     navigationController.setViewControllers(navigationArray, animated: true)
-//                    self.navigationController?.viewControllers = navigationArray
                     print(self.navigationController?.viewControllers)
                     
                     

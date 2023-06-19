@@ -13,24 +13,24 @@ struct BeerModel: Decodable {
     var first_brewed: String?
     var description: String?
     var image_url: String?
-    var volume: Volume
-    var ingredients: Ingredients
+    var volume: Volume?
+    var ingredients: Ingredients?
 }
 struct Volume: Decodable {
     
-    var value: Int
-    var unit: String
+    var value: Int?
+    var unit: String?
 }
 
 struct Ingredients: Decodable {
     
-    var malt: [Malt]
+    var malt: [Malt]?
 }
 
 struct Malt: Decodable {
     
     var name: String?
-    var amount: Amount
+    var amount: Amount?
 
 }
 struct Amount: Decodable {
@@ -38,3 +38,5 @@ struct Amount: Decodable {
     var value: Float?
     var unit: String?
 }
+
+//меняю модель и функцию которая инитится и по итогу дает модель
