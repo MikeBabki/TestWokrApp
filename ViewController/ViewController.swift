@@ -17,14 +17,18 @@ class StartScreenViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var logInButton: UIButton!
     
-    // MARK: - ViewDidLoad
+    // MARK: - LifeCycle - ViewWillAppear
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.tintColor = .white
     }
+    // MARK: - LifeCycle - ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
+    // MARK: - Actions
     
     @IBAction func asGuestModeButtonTapped(_ sender: Any) {
         
@@ -40,7 +44,7 @@ class StartScreenViewController: UIViewController {
     }
 }
 
-    // MARK: - Extention fot styling
+    // MARK: - Extention (setupUI)
 
 extension StartScreenViewController {
     func setupUI() {

@@ -57,6 +57,10 @@ class RegistrationViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
+        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -142,10 +146,12 @@ class RegistrationViewController: UIViewController {
         guard let email = loginTextField.text, let password = confirmPasswordTextField.text else { return }
         networkInstanse.registerApiCall(name: email, email: email, password: password) { (searchResponse) in
             DispatchQueue.main.async {
+ 
                 switch searchResponse {
-                    
+                  
+        
                 case.success(let data):
-
+                    
                     mbProgHud.hide(animated: true)
                     let beerCatalogVC = BeerCatalogViewController()
                     guard let navigationController = self.navigationController
@@ -156,14 +162,14 @@ class RegistrationViewController: UIViewController {
                     navigationArray.removeAll()
                     navigationArray.append(beerCatalogVC)
                     navigationController.setViewControllers(navigationArray, animated: true)
-                    print(self.navigationController?.viewControllers)
-                    
+                    print("Success in RegisterVC")
                     
                 case.failure(let error):
                     mbProgHud.hide(animated: true)
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true)
+                    print("Error in RegisterVC")
                 }
             }
         }

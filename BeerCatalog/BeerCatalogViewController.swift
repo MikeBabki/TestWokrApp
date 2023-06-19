@@ -71,17 +71,19 @@ class BeerCatalogViewController: UIViewController {
         button.addTarget(self, action: #selector(retryConnection), for: .touchUpInside)
         return button
     }()
+    // MARK: - LifeCycle - ViewWillAppear
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationItem.leftBarButtonItem?.tintColor = .black
         navigationController?.navigationBar.topItem?.backButtonTitle = " "
     }
+   
+    // MARK: - LifeCycle - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         loadBeer()
         setupUI()
        
@@ -166,6 +168,7 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
 extension BeerCatalogViewController {
     
     func setupUI() {
+        view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
         self.navigationItem.rightBarButtonItem = rightButton

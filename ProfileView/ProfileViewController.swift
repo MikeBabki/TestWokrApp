@@ -10,6 +10,8 @@ import TinyConstraints
 
 class ProfileViewController: UIViewController {
     
+    //MARK: - Private properties
+    
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -25,28 +27,31 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
+    //MARK: - LifeCycle - ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupUI()
-
     }
      func someHandler(alert: UIAlertAction!) {
          KeychainManager.deleteToken(service: "")
    
     }
+    //MARK: - Actions
     
     @objc func myAccount() {
         let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: someHandler))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
     }
 }
 
+//MARK: - Extention (SetupUI)
+
 extension ProfileViewController {
     func setupUI() {
+        view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.square"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
         self.navigationItem.rightBarButtonItem = rightButton

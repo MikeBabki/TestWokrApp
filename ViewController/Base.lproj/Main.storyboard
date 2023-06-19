@@ -190,7 +190,7 @@
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H80-OE-PaR">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OmN-NM-WYM">
-                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="294"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <constraints>
@@ -221,7 +221,7 @@
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sZT-lv-R8y">
                                                                 <rect key="frame" x="0.0" y="162.66666666666666" width="228" height="34"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             </textField>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gD3-hF-sKt">
                                                                 <rect key="frame" x="0.0" y="218.66666666666666" width="228" height="42.666666666666657"/>
@@ -234,6 +234,9 @@
                                                                     </backgroundConfiguration>
                                                                     <fontDescription key="titleFontDescription" type="system" pointSize="24"/>
                                                                 </buttonConfiguration>
+                                                                <connections>
+                                                                    <action selector="loginButtonTapped:" destination="hcv-bv-oA7" eventType="touchUpInside" id="1ac-aM-f3g"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
@@ -292,7 +295,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="R2Z-VR-xVh"/>
                     <connections>
+                        <outlet property="loginButton" destination="gD3-hF-sKt" id="bju-zC-Qrl"/>
+                        <outlet property="loginTextField" destination="Ses-iJ-zR2" id="mMW-1v-hR9"/>
                         <outlet property="loginView" destination="7wG-3S-ljn" id="iBi-eJ-qD0"/>
+                        <outlet property="passwordTextField" destination="sZT-lv-R8y" id="N1J-G7-dVd"/>
                         <outlet property="visualBlur" destination="H80-OE-PaR" id="LT2-mN-P3t"/>
                     </connections>
                 </viewController>
