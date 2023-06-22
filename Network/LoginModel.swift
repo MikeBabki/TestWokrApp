@@ -10,12 +10,14 @@ import Foundation
 struct LoginModel: Decodable {
 
     var data: LoginData?
+    var message: String?
 }
 
 struct LoginData: Decodable {
     
     var email: String?
     var token: String?
+
 
     enum CodingKeys: String, CodingKey {
 

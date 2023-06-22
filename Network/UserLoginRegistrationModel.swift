@@ -11,6 +11,7 @@ import Foundation
 struct UserLoginRegisterModel: Decodable {
     
     var data: [ProfileInformation]?
+    var message: String?
 }
 struct ProfileInformation: Decodable {
     

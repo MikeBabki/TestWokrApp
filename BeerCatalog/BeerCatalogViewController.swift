@@ -16,6 +16,9 @@ class BeerCatalogViewController: UIViewController {
     // MARK: - Private properties
     
     private var beerModel = [BeerModel]()
+//    private var maltModel = [Ingredients]()
+    
+    
     var pageNumber = 1
     var totalBeerCount = 80
 
@@ -86,7 +89,6 @@ class BeerCatalogViewController: UIViewController {
         
         loadBeer()
         setupUI()
-       
     }
     
     // MARK: -  Action's
@@ -105,6 +107,7 @@ class BeerCatalogViewController: UIViewController {
                         MBProgressHUD.hide(for: self.view, animated: true)
                         self.beerTableView.isHidden = false
                         self.beerModel.append($0)
+                        
                     }
                     self.beerTableView.reloadData()
                 }
@@ -129,12 +132,11 @@ class BeerCatalogViewController: UIViewController {
     @objc func retryConnection(sender : UIButton) {
         MBProgressHUD.hide(for: self.view, animated: true)
         loadBeer()
-        print("Dsadasda")
     }
 }
 
 
-// MARK: - Extentions
+// MARK: - Extention's
 
 extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,17 +155,23 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let beerDescriptionVC = BeerDescriptionViewController()
-        self.navigationController?.pushViewController(beerDescriptionVC, animated: true)
         
-        beerDescriptionVC.title = "Beer Details"
-        navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        let descriptionVC = BeerDescriptionViewController()
+        
+        let model = beerModel[indexPath.row]
+        
+        descriptionVC.modelToConfigure = model
+        
+        let navController = UINavigationController(rootViewController: descriptionVC)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated: true, completion: nil)
+
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-}
 
 extension BeerCatalogViewController {
     

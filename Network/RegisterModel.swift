@@ -9,8 +9,13 @@ import Foundation
 
 
 struct RegisterModel: Decodable {
-
+    
     var data: DataClass?
+    var message: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case message = "Message"
+    }
 }
 
 struct DataClass: Decodable {

@@ -49,7 +49,7 @@ class RegistrationViewController: UIViewController {
     
     private lazy var loginRegisterLabel: UILabel = {
         let label = UILabel()
-        label.text = "Login"
+        label.text = "Email"
         label.font = .systemFont(ofSize: 25, weight: .regular)
         return label
     }()
@@ -78,6 +78,7 @@ class RegistrationViewController: UIViewController {
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = paddingView
         textField.leftViewMode = .always
+        textField.keyboardType = .numberPad
         textField.addTarget(self, action: #selector(firstPasswordTextField), for: .editingChanged)
         return textField
     }()
@@ -96,6 +97,7 @@ class RegistrationViewController: UIViewController {
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         textField.leftView = paddingView
         textField.leftViewMode = .always
+        textField.keyboardType = .numberPad
         textField.addTarget(self, action: #selector(secondConfirmPasswordTextfield(_:)), for: .editingChanged)
         return textField
     }()
@@ -145,31 +147,27 @@ class RegistrationViewController: UIViewController {
         let mbProgHud = MBProgressHUD.showAdded(to: self.view, animated: true)
         guard let email = loginTextField.text, let password = confirmPasswordTextField.text else { return }
         networkInstanse.registerApiCall(name: email, email: email, password: password) { (searchResponse) in
-            DispatchQueue.main.async {
- 
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self
+                else { return }
+                
                 switch searchResponse {
-                  
         
-                case.success(let data):
-                    
+                    case.success(_):
                     mbProgHud.hide(animated: true)
                     let beerCatalogVC = BeerCatalogViewController()
                     guard let navigationController = self.navigationController
                     else { return }
                     
-                    var navigationArray = navigationController.viewControllers
-                    let temp = navigationArray.last
-                    navigationArray.removeAll()
-                    navigationArray.append(beerCatalogVC)
+                    var navigationArray: [UIViewController] = [beerCatalogVC]
                     navigationController.setViewControllers(navigationArray, animated: true)
-                    print("Success in RegisterVC")
                     
                 case.failure(let error):
+//                        setupErrorAlert()
                     mbProgHud.hide(animated: true)
                     let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true)
-                    print("Error in RegisterVC")
                 }
             }
         }
@@ -295,3 +293,4 @@ extension RegistrationViewController {
             confirmPasswordValidationView.height(10)
     }
 }
+

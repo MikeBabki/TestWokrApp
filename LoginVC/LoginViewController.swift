@@ -32,29 +32,30 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         let mbProgHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
+        guard let login = loginTextField.text,
+              let password = passwordTextField.text
+        else { return }
+        
         networkInstanse.loginApiCall(email: login, password: password) { (searchResponse) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self
+                else { return }
+                mbProgHud.hide(animated: true)
                 switch searchResponse {
 
-                case.success(let data):
+                    case.success(_):
+                        let beerCatalogVC = BeerCatalogViewController()
+                        guard let navigationController = self.navigationController
+                        else { return }
+                        var navigationArray: [UIViewController] = [beerCatalogVC]
+                        navigationController.setViewControllers(navigationArray, animated: true)
 
-                    mbProgHud.hide(animated: true)
-                    let beerCatalogVC = BeerCatalogViewController()
-                    guard let navigationController = self.navigationController
-                    else { return }
+                    case.failure(let error):
+//                        setupErrorAlert(error: error as NSError, controller: UIViewController)
+                        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                        self.present(alert, animated: true)
 
-                    var navigationArray = navigationController.viewControllers
-                    let temp = navigationArray.last
-                    navigationArray.removeAll()
-                    navigationArray.append(beerCatalogVC)
-                    navigationController.setViewControllers(navigationArray, animated: true)
-
-                case.failure(let error):
-                    mbProgHud.hide(animated: true)
-                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true)
 
                 }
             }
@@ -73,6 +74,18 @@ extension LoginViewController {
 
 extension LoginViewController {
     func setupUI() {
+        loginView.layer.masksToBounds = true
+        loginView.layer.shadowOffset = CGSize(width: 10,
+                                          height: 10)
+        loginView.layer.shadowRadius = 5
+        loginView.layer.shadowOpacity = 0.3
+        loginView.layer.cornerRadius = 16
         passwordTextField.isSecureTextEntry = true
     }
+}
+
+public func setupErrorAlert(error: NSError, controller: UIViewController) {
+    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default))
+    controller.present(alert, animated: true)
 }

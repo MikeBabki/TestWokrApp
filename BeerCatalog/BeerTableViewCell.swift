@@ -57,7 +57,6 @@ class BeerTableViewCell: UITableViewCell {
         beerImage.kf.setImage(with: URL(string: model?.image_url ?? ""))
         beerNameLabel.text = String(model?.name ?? "")
         beerDescriptionLabel.text = model?.description ?? ""
-    
 }
     
     private func setupUI() {
@@ -87,6 +86,5 @@ class BeerTableViewCell: UITableViewCell {
         
         favouriteIcon.leadingToTrailing(of: contentView, offset: -36)
         favouriteIcon.centerY(to: contentView)
-
     }
 }

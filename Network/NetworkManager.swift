@@ -20,26 +20,49 @@ class NetworkManager {
         
         var urlString = URLManager.beerURLCreator(page: page, totalCount: totalCount)
         var url = URL(string: urlString)
+       
         URLSession.shared.dataTask(with: url!) { data, _, error in
+        
             guard let data = data else {
                 completion(.failure(error!))
                 return
             }
             do {
-                
+               
                 let json = try! JSON(data: data)
-                let arrayNames = json.arrayValue.map { itemJson in
-                    return itemJson["name"].stringValue
+                var malts = [Malt]()
+                let arr = json.arrayValue.map { item in
+                let ingr =  item["ingredients"]["malt"].arrayValue.map({ jsn in
+                let ingredient = Ingredients(malt: jsn.map({ str, jsn in
+                            Malt(name: jsn.stringValue)
+                        }))
+                    })
                 }
-                
+
+                json.arrayValue.map { item in
+                    
+                   let malto = item["ingredients"]["malt"].arrayValue.map({ malt in
+                       let amount = Amount(value: malt["amount"]["value"].floatValue, unit: malt["amount"]["unit"].stringValue)
+                     return Malt(name: malt["name"].stringValue, amount: amount)
+                       
+                    })
+
+                }
+
                 let beerModels = json.arrayValue.map{
+
                     return  BeerModel(
                         name: $0["name"].stringValue,
                         description: $0["description"].stringValue,
-                        image_url: $0["image_url"].stringValue
+                        image_url: $0["image_url"].stringValue,
+                        ingredients: Ingredients(malt: $0["ingredients"]["malt"].arrayValue.map({ malt in
+                            let amount = Amount(value: malt["amount"]["value"].floatValue, unit: malt["amount"]["unit"].stringValue)
+                            
+                          return Malt(name: malt["name"].stringValue, amount: amount)
+                            
+                         }))
                     )
                 }
-                
                 completion(.success(beerModels))
                 
             } catch {
@@ -47,6 +70,7 @@ class NetworkManager {
             }
         }.resume()
     }
+    
     
     
 //MARK: - Api Call for RegistrationView
@@ -75,16 +99,17 @@ class NetworkManager {
                 let json = try JSON(data: data)
                 if let userName = json["data"]["Name"].string,
                    let token1 = json ["data"]["Token"].string
+                   
                 {
                     let service = ""
                     KeychainManager.saveToken(token: token1, service: service)
                     registerModelInstance.email = userName
                     registerModelInstance.token = token1
                     completion(.success(registerModelInstance))
-                    
-                    print("Success in NetworkManager is happened")
+
                 } else {
-                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "invalid data"])
+                    let messageError = json ["Message"].string
+                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: messageError])
                 }
                 
             } catch {
@@ -112,7 +137,6 @@ class NetworkManager {
         ]
 
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
 
             guard let data = data, error == nil else {
@@ -122,6 +146,7 @@ class NetworkManager {
                 let json = try! JSON(data: data)
                 if let userMail = json["data"]["Email"].string,
                    let token = json ["data"]["Token"].string
+                   
                 {
                     let service = ""
                     KeychainManager.saveToken(token: token, service: service)
@@ -129,11 +154,12 @@ class NetworkManager {
                     loginModelInstance.token = token
                     completion(.success(loginModelInstance))
                 } else {
-                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "invalid data"])
+                    let messageForError = json ["message"].string
+
+                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: messageForError])
                 }
 
             } catch {
-
                 completion(.failure(error))
                 print(error)
                 print("error happen in login")
@@ -142,4 +168,3 @@ class NetworkManager {
         task.resume()
     }
 }
-
