@@ -45,6 +45,9 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    @objc func closeButtonTapped() {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 //MARK: - Extention (SetupUI)
@@ -52,6 +55,8 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     func setupUI() {
         view.backgroundColor = .white
+        let leftDismissButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
+        self.navigationItem.leftBarButtonItem = leftDismissButton
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.square"), style: UIBarButtonItem.Style.done, target: self, action: #selector(myAccount))
         self.navigationItem.rightBarButtonItem = rightButton

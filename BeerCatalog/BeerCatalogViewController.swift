@@ -124,9 +124,9 @@ class BeerCatalogViewController: UIViewController {
     
     @objc func myAccount() {
         let profileVC = ProfileViewController()
-        self.navigationController?.pushViewController(profileVC, animated: true)
-        profileVC.title = "Profile"
-        navigationController?.navigationBar.topItem?.backButtonTitle = " "
+        let navController = UINavigationController(rootViewController: profileVC)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated: true, completion: nil)
         
         }
     @objc func retryConnection(sender : UIButton) {

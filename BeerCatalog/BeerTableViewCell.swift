@@ -86,5 +86,6 @@ class BeerTableViewCell: UITableViewCell {
         
         favouriteIcon.leadingToTrailing(of: contentView, offset: -36)
         favouriteIcon.centerY(to: contentView)
+
     }
 }

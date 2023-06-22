@@ -39,6 +39,7 @@ class BeerDescriptionViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 23, weight: .medium)
         label.textAlignment = .center
+        label.textColor = .black
         label.text = "Beer name"
         label.numberOfLines = 0
         return label
@@ -48,6 +49,7 @@ class BeerDescriptionViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .center
+        label.textColor = .black
         label.text = "Beer description"
         label.numberOfLines = 0
         return label
@@ -60,6 +62,7 @@ class BeerDescriptionViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .light)
         label.textAlignment = .center
+        label.textColor = .black
         label.text = "Ingridients :"
         label.numberOfLines = 0
         return label
@@ -101,6 +104,27 @@ class BeerDescriptionViewController: UIViewController {
     @objc func closeButtonTapped() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func shareButton() {
+
+        let beerName: String? = (modelToConfigure.name ?? "") + "\n" + (modelToConfigure.description ?? "")
+
+        var imageForBeer: UIImage?
+        if let imageURL = URL(string: modelToConfigure.image_url ?? ""),
+            let imageData = try? Data(contentsOf: imageURL),
+            let image = UIImage(data: imageData) {
+            imageForBeer = image
+        }
+        
+        let vc = UIActivityViewController(activityItems: [beerName, imageForBeer], applicationActivities: [])
+        if let popoverController = vc.popoverPresentationController{
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = self.view.bounds
+            
+        }
+        self.present (vc, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Extentions
@@ -111,7 +135,7 @@ extension BeerDescriptionViewController {
         let leftDismissButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
         self.navigationItem.leftBarButtonItem = leftDismissButton
         
-        let shareButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: nil)
+        let shareButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButton))
         self.navigationItem.rightBarButtonItem = shareButton
         
         navigationItem.title = ""
