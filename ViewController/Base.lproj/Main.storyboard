@@ -190,7 +190,7 @@
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H80-OE-PaR">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OmN-NM-WYM">
-                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="294"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="260" height="293.33333333333331"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <constraints>

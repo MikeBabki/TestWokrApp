@@ -106,7 +106,7 @@ class NetworkManager {
                     registerModelInstance.email = userName
                     registerModelInstance.token = token1
                     completion(.success(registerModelInstance))
-                    print(KeychainManager.getToken(service: ""))
+
 
                 } else {
                     let messageError = json ["Message"].string

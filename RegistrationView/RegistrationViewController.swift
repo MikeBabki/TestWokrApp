@@ -161,6 +161,8 @@ class RegistrationViewController: UIViewController {
                     
                     var navigationArray: [UIViewController] = [beerCatalogVC]
                     navigationController.setViewControllers(navigationArray, animated: true)
+                        
+                        KeychainManager.saveEmail(email: email)
                     
                 case.failure(let error):
 //                        setupErrorAlert()
@@ -244,8 +246,8 @@ extension RegistrationViewController {
    
             backgroundImage.edgesToSuperview()
             scrollView.edgesToSuperview()
-            contentView.verticalToSuperview()
             
+            contentView.verticalToSuperview()
             contentView.centerInSuperview()
             contentView.widthToSuperview()
             contentView.heightToSuperview()

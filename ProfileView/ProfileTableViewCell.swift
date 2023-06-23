@@ -1,20 +1,17 @@
 //
-//  BeerTableViewCell.swift
+//  ProfileTableViewCell.swift
 //  TestWokrApp
 //
-//  Created by Макар Тюрморезов on 08.06.2023.
+//  Created by Макар Тюрморезов on 23.06.2023.
 //
 
 import UIKit
 import TinyConstraints
-import Kingfisher
 
-class BeerTableViewCell: UITableViewCell {
+class ProfileTableViewCell: UITableViewCell {
 
-    static let identifier = "BeerTableViewCell"
-    var model: BeerModel?
     
-    // MARK: - Private properties
+    static let identifier = "CustomBeerCell"
     
     private lazy var beerImage: UIImageView = {
         let imageView = UIImageView()
@@ -52,18 +49,8 @@ class BeerTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(withModel model: BeerModel?) {
-    
-    self.model = model
-        
-        beerImage.kf.setImage(with: URL(string: model?.image_url ?? ""))
-        beerNameLabel.text = String(model?.name ?? "")
-        beerDescriptionLabel.text = model?.description ?? ""
-}
-    // MARK: - SetupUI
-    
     private func setupUI() {
-        
+
         self.contentView.addSubview(beerImage)
         self.contentView.addSubview(beerNameLabel)
         self.contentView.addSubview(beerDescriptionLabel)

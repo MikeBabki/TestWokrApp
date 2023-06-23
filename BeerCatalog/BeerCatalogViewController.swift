@@ -16,8 +16,6 @@ class BeerCatalogViewController: UIViewController {
     // MARK: - Private properties
     
     private var beerModel = [BeerModel]()
-//    private var maltModel = [Ingredients]()
-    
     
     var pageNumber = 1
     var totalBeerCount = 80
@@ -35,6 +33,7 @@ class BeerCatalogViewController: UIViewController {
         return tableView
         
     }()
+    
     private lazy var loadErrorView: UIView = {
         let view = UIView()
         view.isHidden = true

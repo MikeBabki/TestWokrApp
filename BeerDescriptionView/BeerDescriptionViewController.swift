@@ -63,7 +63,7 @@ class BeerDescriptionViewController: UIViewController {
         label.font = .systemFont(ofSize: 18, weight: .light)
         label.textAlignment = .center
         label.textColor = .black
-        label.text = "Ingridients :"
+        label.text = "Ingredients :"
         label.numberOfLines = 0
         return label
         
@@ -86,11 +86,13 @@ class BeerDescriptionViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupText()
         setupUI()
- 
-        print(modelToConfigure.ingredients)
+  
+    }
+    override func viewDidLayoutSubviews() {
+        view.frame.size.height = scrollView.bounds.height
+        
     }
     
     // MARK: - Action's
@@ -148,6 +150,7 @@ extension BeerDescriptionViewController {
         // MARK: - Constraints
         
         view.clipsToBounds = true
+        
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(beerImageMain)
@@ -155,17 +158,16 @@ extension BeerDescriptionViewController {
         contentView.addSubview(beerDescriptionLabel)
         contentView.addSubview(ingridientsLabel)
         contentView.addSubview(ingridientsStackView)
-        
-//        ingridientsStackView.addSubview(maltView)
-          
+       
         scrollView.edgesToSuperview()
         
-        contentView.verticalToSuperview()
-        contentView.horizontalToSuperview()
-        contentView.centerInSuperview()
-        contentView.widthToSuperview()
-        contentView.heightToSuperview()
+        contentView.top(to: scrollView)
+        contentView.bottom(to: scrollView)
+        contentView.leading(to: scrollView)
+        contentView.trailing(to: scrollView)
         
+        contentView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: 0).isActive = true
+
         beerImageMain.top(to: contentView, offset: 64)
         beerImageMain.height(220)
         beerImageMain.width(220)
@@ -174,6 +176,8 @@ extension BeerDescriptionViewController {
         beerNameLabel.topToBottom(of: beerImageMain, offset: 32)
         beerNameLabel.leading(to: contentView, offset: 16)
         beerNameLabel.trailing(to: contentView, offset: -16)
+        
+        beerNameLabel.width(30)
         beerNameLabel.centerXToSuperview()
         
         beerDescriptionLabel.topToBottom(of: beerNameLabel,offset: 8)
@@ -187,6 +191,7 @@ extension BeerDescriptionViewController {
         ingridientsStackView.top(to: ingridientsLabel, offset: 42)
         ingridientsStackView.leading(to: contentView, offset: 16)
         ingridientsStackView.trailing(to: contentView, offset: -16)
+        ingridientsStackView.bottom(to: contentView, offset: -24)
         ingridientsStackView.centerXToSuperview()
         
     }
@@ -197,12 +202,12 @@ extension BeerDescriptionViewController {
         beerNameLabel.text = modelToConfigure.name
         beerDescriptionLabel.text = modelToConfigure.description
         beerImageMain.kf.setImage(with: URL(string: modelToConfigure.image_url ?? ""))
-        
         let array = modelToConfigure.ingredients?.malt ?? []
         for ingredient in array{
             let maltView = MaltDescriptionView()
             maltView.configure(withModel: ingredient)
             ingridientsStackView.addArrangedSubview(maltView)
         }
+        
     }
 }

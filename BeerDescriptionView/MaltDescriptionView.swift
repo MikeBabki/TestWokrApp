@@ -21,7 +21,8 @@ class MaltDescriptionView: UIView {
     private lazy var ingridientName: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .light)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         
         return label
     }()
@@ -72,56 +73,8 @@ class MaltDescriptionView: UIView {
             ingridientUnit.text = "\(maltUnit)"
         }
     }
-
-    
 }
 
-//func configure(withModel model: Ingredients?) {
-//
-//    self.model = model
-//
-//
-//    if let maltNames = model?.malt?.compactMap({ $0.name }) {
-//        ingridientName.text = maltNames.joined(separator: ", ")
-//    }
-//    print(ingridientName.text)
-//
-//
-//    if let maltVolumes = model?.malt?.flatMap({ $0.amount?.value }) {
-//        let volumeString = maltVolumes.reduce("", { $0 + "\($1) " })
-//        ingridientVolume.text = volumeString
-//    }
-//}
-//
-//}
-//        if let maltVolumes = model?.malt?.compactMap({ $0.amount?.value }) {
-//            ingridientVolume.text = "\(maltVolumes)"
-//        }
-//        
-//        if let maltNames = model?.malt?.compactMap({ $0.name }) {
-//            ingridientName.text = "\(maltNames)"
-//        }
-
-       
-
-
-//        model.map({ item in
-////            ingridientName.text = item.malt?[0].name
-//            ingridientName.text = "\(item.malt?.map({$0.name}))"
-//
-////            ingridientVolume.text = ("\(item.malt?[0].amount?.value)")
-//            ingridientVolume.text = ("\(item.malt?.map({$0.amount?.value}))")
-//
-//        })
-        
-//      json.arrayValue.map { item in
-        
-//        let malto = item["ingredients"]["malt"].arrayValue.map({ malt in
-//            let amount = Amount(value: malt["amount"]["value"].floatValue, unit: malt["amount"]["unit"].stringValue)
-//          return Malt(name: malt["name"].stringValue, amount: amount)
-//
-//         })
-  
 
 extension MaltDescriptionView {
     func setupUI() {
@@ -134,20 +87,17 @@ extension MaltDescriptionView {
         contentView.edgesToSuperview()
         contentView.centerXAnchor
         contentView.width(contentView.frame.width)
-//        contentView.centerXToSuperview()
-//        contentView.height(50)
         
-        ingridientName.leading(to: contentView, offset: 32)
-//        ingridientName.trailingToLeading(of: ingridientVolume, offset: -10)
-        ingridientName.centerYAnchor
+        ingridientName.leading(to: contentView, offset: 16)
+        ingridientName.trailingToLeading(of: ingridientVolume, offset: -8)
+        
+        ingridientVolume.centerXToSuperview()
+        
+        ingridientUnit.trailing(to: contentView, offset: -16)
 
-//        ingridientVolume.trailing(to: ingridientUnit, offset: -32)
-        ingridientVolume.trailingToLeading(of: ingridientUnit, offset: -16)
-        ingridientVolume.centerYAnchor
-        
-        ingridientUnit.trailing(to: contentView, offset: -32)
-        ingridientUnit.leadingToTrailing(of: ingridientVolume, offset: 10)
-        ingridientUnit.centerYAnchor
+        ingridientName.centerYToSuperview()
+        ingridientVolume.centerYToSuperview()
+        ingridientUnit.centerYToSuperview()
     }
 }
 
