@@ -37,16 +37,7 @@ class ProfileViewController: UIViewController {
     private lazy var favouriteBeerTableview: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        
-//        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-//
-//        let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: headerView.frame.width, height: headerView.frame.height))
-//        headerLabel.text = "Favourite Beer"
-//        headerLabel.textColor = .black
-//        headerLabel.textAlignment = .center
-//        headerView.addSubview(headerLabel)
-//
-//        tableView.tableHeaderView = headerView
+        tableView.separatorStyle = .none
 
         return tableView
     }()
@@ -60,11 +51,16 @@ class ProfileViewController: UIViewController {
      func someHandler(alert: UIAlertAction!) {
          KeychainManager.deleteToken(service: "")
          KeychainManager.deleteEmail()
-   
+         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+         let fullScreenViewController = storyboard.instantiateViewController(withIdentifier: "MainID") as! StartScreenViewController
+         fullScreenViewController.navigationItem.setHidesBackButton(true, animated: true)
+         
+         navigationController?.pushViewController(fullScreenViewController, animated: true)
     }
     //MARK: - Actions
     
     @objc func myAccount() {
+        
         let alert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: someHandler))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: nil))
@@ -72,6 +68,8 @@ class ProfileViewController: UIViewController {
     }
     @objc func closeButtonTapped() {
         self.navigationController?.dismiss(animated: true, completion: nil)
+        
+        
     }
 }
 
@@ -124,7 +122,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let label = UILabel()
         label.frame = CGRect.init(x: 0, y: -10, width: headerView.frame.width-10, height: headerView.frame.height-10)
         label.text = "Favourite Beer"
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 25)
         label.textAlignment = .center
         label.textColor = .black
         

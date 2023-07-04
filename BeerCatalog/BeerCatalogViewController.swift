@@ -122,12 +122,21 @@ class BeerCatalogViewController: UIViewController {
     }
     
     @objc func myAccount() {
-        let profileVC = ProfileViewController()
-        let navController = UINavigationController(rootViewController: profileVC)
-        navController.modalPresentationStyle = .fullScreen
-        self.present(navController, animated: true, completion: nil)
         
+        if KeychainManager.getToken(service: "") != nil {
+            
+            let profileVC = ProfileViewController()
+            let navController = UINavigationController(rootViewController: profileVC)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true, completion: nil)
+        } else {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let fullScreenViewController = storyboard.instantiateViewController(withIdentifier: "MainID") as! StartScreenViewController
+            navigationController?.pushViewController(fullScreenViewController, animated: true)
+            
         }
+    }
     @objc func retryConnection(sender : UIButton) {
         MBProgressHUD.hide(for: self.view, animated: true)
         loadBeer()
@@ -156,15 +165,12 @@ extension BeerCatalogViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let descriptionVC = BeerDescriptionViewController()
-        
         let model = beerModel[indexPath.row]
-        
         descriptionVC.modelToConfigure = model
         
         let navController = UINavigationController(rootViewController: descriptionVC)
         navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true, completion: nil)
-
         }
     }
     

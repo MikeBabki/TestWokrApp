@@ -49,6 +49,7 @@ class StartScreenViewController: UIViewController {
 extension StartScreenViewController {
     func setupUI() {
 
+    
         view.backgroundColor = .white
         buttonsView.layer.masksToBounds = true
         buttonsView.layer.shadowOffset = CGSize(width: 10,

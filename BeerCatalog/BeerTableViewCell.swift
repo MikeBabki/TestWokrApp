@@ -37,20 +37,32 @@ class BeerTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var favouriteIcon: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "star")
-        return image
+    private lazy var favouriteIcon: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.addTarget(self, action: #selector(addFavourite), for: .touchUpInside)
+        return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupUI()
     }
+    // MARK: - Action (add favourite beer)
+    
+    @objc func addFavourite(sender : UIButton) {
+        
+        if favouriteIcon.currentImage == UIImage(systemName: "star") {
+            favouriteIcon.setImage(UIImage(systemName: "star.fill"), for: .normal)
+         } else {
+             favouriteIcon.setImage(UIImage(systemName: "star"), for: .normal)
+         }
+     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - Configure cells
     
     func configure(withModel model: BeerModel?) {
     
